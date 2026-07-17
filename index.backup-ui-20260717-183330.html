@@ -1,0 +1,1565 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MIDNIGHT FM</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0b0b0c;
+      color: white;
+      font-family: "Inter", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, #c6a97210, transparent 25%),
+        radial-gradient(circle at top right, #8b5e3c10, transparent 25%),
+        #0b0b0c;
+      z-index: -1;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      backdrop-filter: blur(14px);
+      background: rgba(10, 10, 10, .93);
+      border-bottom: 1px solid #1e2226;
+    }
+
+    .header-container {
+      max-width: 1080px;
+      margin: auto;
+      min-height: 64px;
+      padding: 9px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 31px;
+      font-weight: 900;
+      background: linear-gradient(to right, #d6b27b, #8e623f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .search-top {
+      display: flex;
+      gap: 8px;
+      width: 455px;
+    }
+
+    .search-bar {
+      flex: 1;
+      background: #111114;
+      border: 1px solid #232323;
+      border-radius: 7px;
+      padding: 10px 13px;
+      color: white;
+      outline: none;
+      font-size: 13px;
+    }
+
+    .search-bar:focus {
+      border-color: #c6a972;
+    }
+
+    .search-btn {
+      background: linear-gradient(to right, #d6b27b, #8e623f);
+      border: none;
+      color: white;
+      padding: 10px 17px;
+      border-radius: 7px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .3s;
+      font-size: 13px;
+    }
+
+    .search-btn:hover {
+      opacity: .9;
+      transform: translateY(-2px);
+    }
+
+    .account-button {
+      height: 43px;
+      min-width: 120px;
+      padding: 5px 11px 5px 6px;
+      border: 1px solid #28282b;
+      border-radius: 7px;
+      background: #111114;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: .3s;
+      font-family: inherit;
+      font-weight: 700;
+    }
+
+    .account-button:hover {
+      border-color: #c6a972;
+      background: #181719;
+    }
+
+    .account-avatar {
+      width: 31px;
+      height: 31px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(to right, #d6b27b, #8e623f);
+      color: white;
+      font-size: 13px;
+      font-weight: 800;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .account-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .account-label {
+      max-width: 88px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .hero {
+      max-width: 1080px;
+      margin: auto;
+      padding: 25px 18px 17px;
+    }
+
+    .hero-section {
+      position: relative;
+      height: 410px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      text-decoration: none;
+      color: white;
+      display: flex;
+      align-items: flex-end;
+      border: 1px solid rgba(212, 175, 55, .18);
+      box-shadow: 0 0 80px rgba(212, 175, 55, .08);
+      background:
+        linear-gradient(to top, rgba(0, 0, 0, .96), rgba(0, 0, 0, .20)),
+        radial-gradient(circle at 25% 20%, #503e2c, transparent 35%),
+        linear-gradient(135deg, #191513, #080809);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-overlay {
+      width: 100%;
+      padding: 35px;
+      background:
+        linear-gradient(
+          to top,
+          rgba(0, 0, 0, .98),
+          rgba(0, 0, 0, .48),
+          rgba(0, 0, 0, .05)
+        );
+    }
+
+    .hero-kicker {
+      color: #c9a46a;
+      font-size: 11px;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: 57px;
+      font-weight: 900;
+      line-height: .95;
+      margin-bottom: 13px;
+      max-width: 720px;
+    }
+
+    .hero-description {
+      color: #d4d4d8;
+      font-size: 15px;
+      max-width: 620px;
+      line-height: 1.5;
+    }
+
+    .hero-button {
+      display: inline-flex;
+      margin-top: 18px;
+      padding: 10px 16px;
+      border-radius: 6px;
+      background: linear-gradient(to right, #d6b27b, #8e623f);
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .section {
+      max-width: 1080px;
+      margin: auto;
+      padding: 8px 18px 36px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .carousel {
+      display: flex;
+      gap: 13px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+    }
+
+    .carousel::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .carousel::-webkit-scrollbar-thumb {
+      background: #272727;
+      border-radius: 999px;
+    }
+
+    .album-card {
+      display: block;
+      min-width: 178px;
+      background: #111114;
+      border: 1px solid #232323;
+      border-radius: 7px;
+      overflow: hidden;
+      transition: .35s;
+      text-decoration: none;
+      color: white;
+    }
+
+    .album-card:not(.is-disabled):hover {
+      transform: translateY(-4px);
+      border-color: #c6a972;
+      box-shadow: 0 0 40px rgba(198, 169, 114, .15);
+    }
+
+    .album-card.is-disabled {
+      cursor: default;
+    }
+
+    .album-card img {
+      width: 100%;
+      height: 178px;
+      object-fit: cover;
+      background: #191919;
+      display: block;
+    }
+
+    .album-info {
+      padding: 10px 11px 11px;
+    }
+
+    .album-info h3 {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .album-info p {
+      color: #9ca3af;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .album-rating {
+      color: #d6b27b;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tabs button {
+      background: #111114;
+      border: 1px solid #232323;
+      color: white;
+      padding: 9px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: .3s;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .tabs button.active {
+      background: linear-gradient(to right, #d6b27b, #8e623f);
+      border-color: transparent;
+    }
+
+    .results {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 14px;
+    }
+
+    .card-link {
+      text-decoration: none;
+    }
+
+    .card {
+      background: #111114;
+      border: 1px solid #232323;
+      border-radius: 7px;
+      overflow: hidden;
+      transition: .35s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #c6a972;
+    }
+
+    .card img {
+      width: 100%;
+      aspect-ratio: 1;
+      height: auto;
+      object-fit: cover;
+      object-position: center top;
+      background: #181818;
+      display: block;
+    }
+
+    .card-content {
+      padding: 10px 11px 12px;
+    }
+
+    .card-content h3 {
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: white;
+    }
+
+    .card-content p {
+      color: #9ca3af;
+      font-size: 12px;
+    }
+
+    .loading {
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    .error-message {
+      color: #d6b27b;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 1100;
+      background: rgba(0, 0, 0, .72);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .auth-modal {
+      width: 100%;
+      max-width: 470px;
+      max-height: calc(100vh - 44px);
+      overflow-y: auto;
+      background: #111114;
+      border: 1px solid #29282a;
+      border-radius: 30px;
+      padding: 30px;
+      box-shadow: 0 30px 100px rgba(0, 0, 0, .65);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 26px;
+    }
+
+    .modal-header h2 {
+      font-size: 29px;
+      font-weight: 850;
+    }
+
+    .modal-close {
+      width: 39px;
+      height: 39px;
+      border-radius: 12px;
+      border: 1px solid #28282b;
+      background: #171719;
+      color: #d4d4d8;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .auth-panel {
+      display: none;
+    }
+
+    .auth-panel.active {
+      display: block;
+    }
+
+    .auth-subtitle {
+      color: #9ca3af;
+      margin: -12px 0 22px;
+      line-height: 1.55;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #d4d4d8;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 52px;
+      padding: 0 16px;
+      border-radius: 14px;
+      border: 1px solid #28282b;
+      outline: none;
+      background: #0b0b0c;
+      color: white;
+      font: inherit;
+    }
+
+    .form-input:focus {
+      border-color: #c6a972;
+    }
+
+    .form-action {
+      width: 100%;
+      height: 54px;
+      margin-top: 9px;
+      border: none;
+      border-radius: 15px;
+      background: linear-gradient(to right, #d6b27b, #8e623f);
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .form-action:disabled {
+      opacity: .55;
+      cursor: wait;
+    }
+
+    .auth-links {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .text-button {
+      border: 0;
+      background: transparent;
+      color: #d6b27b;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .auth-message {
+      min-height: 24px;
+      margin: 4px 0 12px;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #e5b96f;
+    }
+
+    .auth-message.success {
+      color: #7dd3a7;
+    }
+
+    .profile-summary {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 16px;
+      margin-bottom: 22px;
+      border-radius: 18px;
+      background: #0b0b0c;
+      border: 1px solid #232323;
+    }
+
+    .profile-summary .account-avatar {
+      width: 54px;
+      height: 54px;
+      font-size: 21px;
+    }
+
+    .profile-summary strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 18px;
+    }
+
+    .profile-summary p {
+      max-width: 290px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    .logout-button {
+      width: 100%;
+      height: 50px;
+      margin-top: 13px;
+      border-radius: 14px;
+      border: 1px solid #343438;
+      background: transparent;
+      color: #e4e4e7;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    #searchResults {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .header-container {
+        flex-direction: column;
+        padding: 12px 14px;
+      }
+
+      .logo {
+        font-size: 29px;
+      }
+
+      .search-top {
+        width: 100%;
+      }
+
+      .account-button {
+        min-width: 130px;
+        justify-content: flex-start;
+        align-self: flex-end;
+      }
+
+      .hero {
+        padding: 18px 14px;
+      }
+
+      .hero-section {
+        height: 390px;
+      }
+
+      .hero-overlay {
+        padding: 26px 21px;
+      }
+
+      .hero-title {
+        font-size: 42px;
+      }
+
+      .hero-description {
+        font-size: 14px;
+      }
+
+      .section {
+        padding: 8px 14px 30px;
+      }
+
+      .section-title {
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .search-top {
+        flex-direction: column;
+      }
+
+      .hero-title {
+        font-size: 34px;
+      }
+
+      .tabs {
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo" onclick="showHome()">
+        MIDNIGHT FM
+      </div>
+
+      <div class="search-top">
+        <input
+          type="text"
+          class="search-bar"
+          id="searchInput"
+          placeholder="Pesquise artistas, álbuns e músicas..."
+        >
+
+        <button class="search-btn" onclick="searchMusic()">
+          Buscar
+        </button>
+      </div>
+
+      <button class="account-button" id="accountButton" onclick="openAccountModal()">
+        <span class="account-avatar" id="headerAvatar">?</span>
+        <span class="account-label" id="accountLabel">Entrar</span>
+      </button>
+    </div>
+  </header>
+
+  <div
+    class="modal-backdrop"
+    id="authModal"
+    aria-hidden="true"
+    onclick="closeModalFromBackdrop(event)"
+  >
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+      <div class="modal-header">
+        <h2 id="authModalTitle">Sua conta</h2>
+        <button class="modal-close" onclick="closeAccountModal()" aria-label="Fechar">
+          &times;
+        </button>
+      </div>
+
+      <section class="auth-panel active" id="loginPanel">
+        <p class="auth-subtitle">Entre para salvar seu perfil e suas avaliacoes.</p>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail">E-mail</label>
+            <input class="form-input" id="loginEmail" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Senha</label>
+            <input class="form-input" id="loginPassword" type="password" autocomplete="current-password" required>
+          </div>
+
+          <p class="auth-message" id="loginMessage"></p>
+
+          <button class="form-action" id="loginButton" type="submit">
+            Entrar
+          </button>
+        </form>
+
+        <div class="auth-links">
+          <button class="text-button" onclick="showAuthPanel('register')" type="button">
+            Criar conta
+          </button>
+          <button class="text-button" onclick="resetPassword()" type="button">
+            Esqueci minha senha
+          </button>
+        </div>
+      </section>
+
+      <section class="auth-panel" id="registerPanel">
+        <p class="auth-subtitle">Crie seu perfil para participar do Midnight FM.</p>
+
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="registerName">Nome de usuario</label>
+            <input class="form-input" id="registerName" type="text" maxlength="30" autocomplete="nickname" required>
+          </div>
+
+          <div class="form-group">
+            <label for="registerEmail">E-mail</label>
+            <input class="form-input" id="registerEmail" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="registerPassword">Senha</label>
+            <input class="form-input" id="registerPassword" type="password" minlength="6" autocomplete="new-password" required>
+          </div>
+
+          <div class="form-group">
+            <label for="registerConfirmPassword">Confirmar senha</label>
+            <input class="form-input" id="registerConfirmPassword" type="password" minlength="6" autocomplete="new-password" required>
+          </div>
+
+          <p class="auth-message" id="registerMessage"></p>
+
+          <button class="form-action" id="registerButton" type="submit">
+            Criar conta
+          </button>
+        </form>
+
+        <div class="auth-links">
+          <button class="text-button" onclick="showAuthPanel('login')" type="button">
+            Ja tenho conta
+          </button>
+        </div>
+      </section>
+
+      <section class="auth-panel" id="profilePanel">
+        <div class="profile-summary">
+          <span class="account-avatar" id="profileAvatar">?</span>
+          <div>
+            <strong id="profileDisplayName">Usuario</strong>
+            <p id="profileEmail"></p>
+          </div>
+        </div>
+
+        <form id="profileForm">
+          <div class="form-group">
+            <label for="profileName">Nome de usuario</label>
+            <input class="form-input" id="profileName" type="text" maxlength="30" required>
+          </div>
+
+          <div class="form-group">
+            <label for="profilePhoto">URL da foto de perfil (opcional)</label>
+            <input class="form-input" id="profilePhoto" type="url" placeholder="https://...">
+          </div>
+
+          <p class="auth-message" id="profileMessage"></p>
+
+          <button class="form-action" id="profileButton" type="submit">
+            Salvar perfil
+          </button>
+        </form>
+
+        <button class="logout-button" onclick="logoutUser()" type="button">
+          Sair da conta
+        </button>
+      </section>
+    </div>
+  </div>
+
+  <section class="hero home-section">
+    <a
+      id="featuredAlbumLink"
+      class="hero-section"
+      href="https://open.spotify.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <div class="hero-overlay">
+        <div class="hero-kicker">
+          Álbum destaque da semana
+        </div>
+
+        <div class="hero-title" id="featuredAlbumTitle">
+          Carregando...
+        </div>
+
+        <div class="hero-description" id="featuredAlbumDescription">
+          Buscando um lançamento recente no Spotify...
+        </div>
+
+        <span class="hero-button">
+          Ouvir no Spotify
+        </span>
+      </div>
+    </a>
+  </section>
+
+  <section class="section home-section">
+    <div class="section-header">
+      <div class="section-title">
+        Mais Bem Avaliados
+      </div>
+    </div>
+
+    <div class="carousel" id="topRated">
+      <p class="loading">Carregando avaliações...</p>
+    </div>
+  </section>
+
+  <section class="section" id="searchResults">
+    <div class="tabs">
+      <button class="tab active" data-type="album">Álbuns</button>
+      <button class="tab" data-type="track">Músicas</button>
+      <button class="tab" data-type="artist">Artistas</button>
+    </div>
+
+    <div class="results" id="results"></div>
+  </section>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      doc,
+      setDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import {
+      getAuth,
+      browserLocalPersistence,
+      setPersistence,
+      onAuthStateChanged,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      sendPasswordResetEmail,
+      updateProfile,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD8jI-hfEBI9f6o9CFtBX0TudtPjzGvKLQ",
+      authDomain: "music-explorer-caeaa.firebaseapp.com",
+      projectId: "music-explorer-caeaa",
+      storageBucket: "music-explorer-caeaa.firebasestorage.app",
+      messagingSenderId: "22348266636",
+      appId: "1:22348266636:web:6c31922207796b78d4cfa9"
+    };
+
+    const LASTFM_API_KEY = "f45f6d345baa8f3c76bb337221cd2402";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    setPersistence(auth, browserLocalPersistence).catch((error) => {
+      console.error("Nao foi possivel manter a sessao ativa:", error);
+    });
+
+    const placeholderSvg = encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500">
+        <defs>
+          <linearGradient id="bg" x2="1" y2="1">
+            <stop stop-color="#201a17"/>
+            <stop offset="1" stop-color="#0b0b0c"/>
+          </linearGradient>
+        </defs>
+        <rect width="500" height="500" fill="url(#bg)"/>
+        <circle cx="250" cy="235" r="86" fill="none" stroke="#c9a46a" stroke-width="5" opacity=".7"/>
+        <circle cx="250" cy="235" r="16" fill="#c9a46a" opacity=".7"/>
+        <text x="250" y="375" fill="#c9a46a" text-anchor="middle"
+          font-family="Arial" font-size="24" font-weight="700">MIDNIGHT FM</text>
+      </svg>
+    `);
+
+    const PLACEHOLDER_IMAGE = `data:image/svg+xml;charset=utf-8,${placeholderSvg}`;
+
+    const FALLBACK_FEATURED_ALBUM = {
+      title: "Ray of Light",
+      artist: "Madonna",
+      cover: "https://upload.wikimedia.org/wikipedia/en/d/d1/Ray_of_Light_Madonna.png",
+      spotifyUrl: "https://open.spotify.com/search/Ray%20of%20Light%20Madonna"
+    };
+
+    let currentType = "album";
+
+    const tabs = document.querySelectorAll(".tab");
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((button) => button.classList.remove("active"));
+        tab.classList.add("active");
+        currentType = tab.dataset.type;
+
+        if (document.getElementById("searchInput").value.trim()) {
+          window.searchMusic();
+        }
+      });
+    });
+
+    document.getElementById("searchInput").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        window.searchMusic();
+      }
+    });
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function authMessage(error) {
+      const messages = {
+        "auth/email-already-in-use": "Este e-mail ja possui uma conta.",
+        "auth/invalid-email": "Digite um e-mail valido.",
+        "auth/invalid-credential": "E-mail ou senha incorretos.",
+        "auth/user-not-found": "E-mail ou senha incorretos.",
+        "auth/wrong-password": "E-mail ou senha incorretos.",
+        "auth/weak-password": "A senha precisa ter pelo menos 6 caracteres.",
+        "auth/missing-password": "Digite sua senha.",
+        "auth/operation-not-allowed": "Ative Email/Senha no Firebase Authentication.",
+        "auth/unauthorized-domain": "Adicione este dominio nos dominios autorizados do Firebase.",
+        "auth/network-request-failed": "Nao foi possivel conectar ao Firebase.",
+        "auth/too-many-requests": "Muitas tentativas. Aguarde um pouco e tente novamente."
+      };
+
+      return messages[error.code] || "Nao foi possivel concluir a operacao.";
+    }
+
+    function setAuthMessage(panel, message, isSuccess = false) {
+      const element = document.getElementById(`${panel}Message`);
+      element.textContent = message;
+      element.classList.toggle("success", isSuccess);
+    }
+
+    function setFormBusy(buttonId, busy, defaultLabel) {
+      const button = document.getElementById(buttonId);
+      button.disabled = busy;
+      button.textContent = busy ? "Aguarde..." : defaultLabel;
+    }
+
+    function userName(user) {
+      return user?.displayName?.trim() || user?.email?.split("@")[0] || "Usuario";
+    }
+
+    function avatarInitial(user) {
+      return userName(user).charAt(0).toUpperCase();
+    }
+
+    function renderAvatar(element, user) {
+      element.innerHTML = "";
+
+      if (user?.photoURL) {
+        const image = document.createElement("img");
+        image.src = user.photoURL;
+        image.alt = `Foto de ${userName(user)}`;
+        image.referrerPolicy = "no-referrer";
+        image.addEventListener("error", () => {
+          element.innerHTML = "";
+          element.textContent = avatarInitial(user);
+        });
+        element.appendChild(image);
+        return;
+      }
+
+      element.textContent = user ? avatarInitial(user) : "?";
+    }
+
+    function renderAccount(user) {
+      const label = document.getElementById("accountLabel");
+
+      if (user) {
+        label.textContent = userName(user);
+        document.getElementById("profileDisplayName").textContent = userName(user);
+        document.getElementById("profileEmail").textContent = user.email || "";
+        document.getElementById("profileName").value = user.displayName || "";
+        document.getElementById("profilePhoto").value = user.photoURL || "";
+      } else {
+        label.textContent = "Entrar";
+        document.getElementById("profileDisplayName").textContent = "Usuario";
+        document.getElementById("profileEmail").textContent = "";
+        document.getElementById("profileName").value = "";
+        document.getElementById("profilePhoto").value = "";
+      }
+
+      renderAvatar(document.getElementById("headerAvatar"), user);
+      renderAvatar(document.getElementById("profileAvatar"), user);
+    }
+
+    async function saveProfileDocument(user, isNewUser = false) {
+      const data = {
+        displayName: user.displayName || "",
+        email: user.email || "",
+        photoURL: user.photoURL || "",
+        updatedAt: serverTimestamp()
+      };
+
+      if (isNewUser) {
+        data.createdAt = serverTimestamp();
+      }
+
+      try {
+        await setDoc(doc(db, "users", user.uid), data, { merge: true });
+        return true;
+      } catch (error) {
+        console.warn("Perfil autenticado, mas o Firestore recusou a gravacao.", error);
+        return false;
+      }
+    }
+
+    window.showAuthPanel = function showAuthPanel(panel) {
+      const targetPanel = auth.currentUser ? "profile" : panel;
+      const titles = {
+        login: "Entrar",
+        register: "Criar conta",
+        profile: "Meu perfil"
+      };
+
+      document.querySelectorAll(".auth-panel").forEach((element) => {
+        element.classList.remove("active");
+      });
+
+      document.getElementById(`${targetPanel}Panel`).classList.add("active");
+      document.getElementById("authModalTitle").textContent = titles[targetPanel];
+      setAuthMessage("login", "");
+      setAuthMessage("register", "");
+
+      if (targetPanel === "profile") {
+        setAuthMessage("profile", "");
+        renderAccount(auth.currentUser);
+      }
+    };
+
+    window.openAccountModal = function openAccountModal() {
+      window.showAuthPanel(auth.currentUser ? "profile" : "login");
+      document.getElementById("authModal").classList.add("open");
+      document.getElementById("authModal").setAttribute("aria-hidden", "false");
+    };
+
+    window.closeAccountModal = function closeAccountModal() {
+      document.getElementById("authModal").classList.remove("open");
+      document.getElementById("authModal").setAttribute("aria-hidden", "true");
+    };
+
+    window.closeModalFromBackdrop = function closeModalFromBackdrop(event) {
+      if (event.target.id === "authModal") {
+        window.closeAccountModal();
+      }
+    };
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        window.closeAccountModal();
+      }
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      setAuthMessage("login", "");
+      setFormBusy("loginButton", true, "Entrar");
+
+      try {
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value;
+
+        await signInWithEmailAndPassword(auth, email, password);
+        document.getElementById("loginForm").reset();
+        window.closeAccountModal();
+      } catch (error) {
+        setAuthMessage("login", authMessage(error));
+      } finally {
+        setFormBusy("loginButton", false, "Entrar");
+      }
+    });
+
+    document.getElementById("registerForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      setAuthMessage("register", "");
+
+      const name = document.getElementById("registerName").value.trim();
+      const email = document.getElementById("registerEmail").value.trim();
+      const password = document.getElementById("registerPassword").value;
+      const confirmation = document.getElementById("registerConfirmPassword").value;
+
+      if (password !== confirmation) {
+        setAuthMessage("register", "As senhas nao coincidem.");
+        return;
+      }
+
+      setFormBusy("registerButton", true, "Criar conta");
+
+      try {
+        const credential = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(credential.user, { displayName: name });
+        const savedInFirestore = await saveProfileDocument(credential.user, true);
+
+        renderAccount(credential.user);
+        window.showAuthPanel("profile");
+        setAuthMessage(
+          "profile",
+          savedInFirestore
+            ? "Conta criada e perfil salvo."
+            : "Conta criada. Configure as regras do Firestore para salvar o perfil publico.",
+          true
+        );
+        document.getElementById("registerForm").reset();
+      } catch (error) {
+        setAuthMessage("register", authMessage(error));
+      } finally {
+        setFormBusy("registerButton", false, "Criar conta");
+      }
+    });
+
+    window.resetPassword = async function resetPassword() {
+      const email = document.getElementById("loginEmail").value.trim();
+
+      if (!email) {
+        setAuthMessage("login", "Digite seu e-mail acima para recuperar a senha.");
+        return;
+      }
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        setAuthMessage("login", "E-mail de recuperacao enviado.", true);
+      } catch (error) {
+        setAuthMessage("login", authMessage(error));
+      }
+    };
+
+    document.getElementById("profileForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!auth.currentUser) {
+        window.showAuthPanel("login");
+        return;
+      }
+
+      setAuthMessage("profile", "");
+      setFormBusy("profileButton", true, "Salvar perfil");
+
+      try {
+        const name = document.getElementById("profileName").value.trim();
+        const photoURL = document.getElementById("profilePhoto").value.trim() || null;
+
+        await updateProfile(auth.currentUser, {
+          displayName: name,
+          photoURL
+        });
+
+        const savedInFirestore = await saveProfileDocument(auth.currentUser);
+        renderAccount(auth.currentUser);
+        setAuthMessage(
+          "profile",
+          savedInFirestore
+            ? "Perfil atualizado."
+            : "Perfil atualizado no login. O Firestore precisa permitir a gravacao do perfil.",
+          true
+        );
+      } catch (error) {
+        setAuthMessage("profile", authMessage(error));
+      } finally {
+        setFormBusy("profileButton", false, "Salvar perfil");
+      }
+    });
+
+    window.logoutUser = async function logoutUser() {
+      try {
+        await signOut(auth);
+        window.closeAccountModal();
+      } catch (error) {
+        setAuthMessage("profile", authMessage(error));
+      }
+    };
+
+    onAuthStateChanged(auth, (user) => {
+      renderAccount(user);
+    });
+
+    function setHeroWithoutCover() {
+      document.getElementById("featuredAlbumLink").style.backgroundImage = `
+        linear-gradient(to top, rgba(0,0,0,.96), rgba(0,0,0,.16)),
+        radial-gradient(circle at 25% 20%, #503e2c, transparent 35%),
+        linear-gradient(135deg, #191513, #080809)
+      `;
+    }
+
+    function setHeroCover(coverUrl) {
+      if (!coverUrl) {
+        setHeroWithoutCover();
+        return;
+      }
+
+      const image = new Image();
+
+      image.onload = () => {
+        document.getElementById("featuredAlbumLink").style.backgroundImage = `
+          linear-gradient(to top, rgba(0,0,0,.96), rgba(0,0,0,.15)),
+          url("${coverUrl}")
+        `;
+      };
+
+      image.onerror = setHeroWithoutCover;
+      image.src = coverUrl;
+    }
+
+    function updateFeaturedHero(album) {
+      const hero = document.getElementById("featuredAlbumLink");
+
+      setHeroCover(album.cover);
+      hero.href = album.spotifyUrl || "https://open.spotify.com/";
+      hero.setAttribute(
+        "aria-label",
+        `Abrir ${album.title}, de ${album.artist}, no Spotify`
+      );
+
+      document.getElementById("featuredAlbumTitle").textContent = album.title;
+      document.getElementById("featuredAlbumDescription").textContent =
+        `${album.artist} está em destaque entre os novos lançamentos do Spotify.`;
+    }
+
+    async function loadFeaturedAlbum() {
+      try {
+        const response = await fetch("/api/featured-album");
+
+        if (!response.ok) {
+          throw new Error(`Destaque indisponível: ${response.status}`);
+        }
+
+        const album = await response.json();
+
+        if (!album.title || !album.artist || !album.spotifyUrl) {
+          throw new Error("Dados incompletos retornados pela API.");
+        }
+
+        updateFeaturedHero(album);
+      } catch (error) {
+        console.info(
+          "O destaque usa o cartão padrão enquanto /api/featured-album não estiver disponível.",
+          error
+        );
+        updateFeaturedHero(FALLBACK_FEATURED_ALBUM);
+      }
+    }
+
+    async function lastFmRequest(method, field, value) {
+      const params = new URLSearchParams({
+        method,
+        [field]: value,
+        api_key: LASTFM_API_KEY,
+        format: "json",
+        limit: "12"
+      });
+
+      const response = await fetch(
+        `https://ws.audioscrobbler.com/2.0/?${params.toString()}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Falha de conexão com o Last.fm: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.message || "A API do Last.fm rejeitou a busca.");
+      }
+
+      return data;
+    }
+
+    async function getArtistImageFromWikipedia(artistName) {
+      try {
+        const searchUrl =
+          `https://pt.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(artistName + " artista musical cantora cantor")}&format=json&origin=*`;
+
+        const searchResponse = await fetch(searchUrl);
+
+        if (!searchResponse.ok) {
+          return PLACEHOLDER_IMAGE;
+        }
+
+        const searchData = await searchResponse.json();
+        const result = (searchData.query?.search || []).find((item) => {
+          const title = item.title.toLowerCase();
+          const snippet = item.snippet.toLowerCase();
+
+          return (
+            !title.includes("álbum") &&
+            !title.includes("album") &&
+            !title.includes("canção") &&
+            !title.includes("song") &&
+            !snippet.includes("álbum") &&
+            !snippet.includes("album") &&
+            !snippet.includes("canção")
+          );
+        });
+
+        if (!result) {
+          return PLACEHOLDER_IMAGE;
+        }
+
+        const summaryResponse = await fetch(
+          `https://pt.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(result.title)}`
+        );
+
+        if (!summaryResponse.ok) {
+          return PLACEHOLDER_IMAGE;
+        }
+
+        const summaryData = await summaryResponse.json();
+
+        return (
+          summaryData.originalimage?.source ||
+          summaryData.thumbnail?.source ||
+          PLACEHOLDER_IMAGE
+        );
+      } catch (error) {
+        return PLACEHOLDER_IMAGE;
+      }
+    }
+
+    async function loadTopRated() {
+      const container = document.getElementById("topRated");
+
+      try {
+        const snapshot = await getDocs(collection(db, "ratings"));
+        const albumRatings = {};
+
+        snapshot.forEach((documentItem) => {
+          const data = documentItem.data();
+          const rating = Number(data.rating);
+
+          if (!data.name || !Number.isFinite(rating)) {
+            return;
+          }
+
+          if (!albumRatings[data.name]) {
+            albumRatings[data.name] = { total: 0, count: 0 };
+          }
+
+          albumRatings[data.name].total += rating;
+          albumRatings[data.name].count += 1;
+        });
+
+        const ranked = Object.entries(albumRatings)
+          .map(([name, data]) => ({
+            name,
+            average: data.total / data.count,
+            count: data.count
+          }))
+          .sort((a, b) => b.average - a.average || b.count - a.count)
+          .slice(0, 12);
+
+        container.innerHTML = "";
+
+        if (!ranked.length) {
+          container.innerHTML = `<p class="loading">Nenhuma avaliação encontrada.</p>`;
+          return;
+        }
+
+        for (const album of ranked) {
+          let artist = "";
+          let image = PLACEHOLDER_IMAGE;
+
+          try {
+            const data = await lastFmRequest("album.search", "album", album.name);
+            const result = data.results?.albummatches?.album?.[0];
+
+            if (result?.artist) {
+              artist = result.artist;
+              image = result.image?.[3]?.["#text"] || PLACEHOLDER_IMAGE;
+            }
+          } catch (error) {
+            console.error(`Erro ao buscar "${album.name}":`, error);
+          }
+
+          const artistText = artist || "Artista não encontrado";
+          const content = `
+            <img
+              src="${escapeHtml(image)}"
+              alt="Capa do álbum ${escapeHtml(album.name)}"
+              onerror="this.onerror=null; this.src='${PLACEHOLDER_IMAGE}'"
+            >
+            <div class="album-info">
+              <h3>${escapeHtml(album.name)}</h3>
+              <p>${escapeHtml(artistText)}</p>
+              <p>${album.count} avaliações</p>
+              <div class="album-rating">★ ${album.average.toFixed(1)}</div>
+            </div>
+          `;
+
+          if (artist) {
+            container.innerHTML += `
+              <a
+                href="album.html?artist=${encodeURIComponent(artist)}&album=${encodeURIComponent(album.name)}"
+                class="album-card"
+              >
+                ${content}
+              </a>
+            `;
+          } else {
+            container.innerHTML += `
+              <article class="album-card is-disabled">
+                ${content}
+              </article>
+            `;
+          }
+        }
+      } catch (error) {
+        console.error("Erro ao carregar avaliações:", error);
+        container.innerHTML = `<p class="error-message">Erro ao carregar avaliações.</p>`;
+      }
+    }
+
+    function showSearchResults() {
+      document.querySelectorAll(".home-section").forEach((section) => {
+        section.style.display = "none";
+      });
+
+      document.getElementById("searchResults").style.display = "block";
+    }
+
+    window.showHome = function showHome() {
+      document.getElementById("searchInput").value = "";
+      document.getElementById("searchResults").style.display = "none";
+      document.querySelectorAll(".home-section").forEach((section) => {
+        section.style.display = "";
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    window.searchMusic = async function searchMusic() {
+      const query = document.getElementById("searchInput").value.trim();
+      const results = document.getElementById("results");
+
+      if (!query) {
+        alert("Digite algo para pesquisar.");
+        return;
+      }
+
+      showSearchResults();
+      results.innerHTML = `<p class="loading">Carregando...</p>`;
+
+      try {
+        let data;
+        let items = [];
+
+        if (currentType === "album") {
+          data = await lastFmRequest("album.search", "album", query);
+          items = data.results?.albummatches?.album || [];
+        }
+
+        if (currentType === "track") {
+          data = await lastFmRequest("track.search", "track", query);
+          items = data.results?.trackmatches?.track || [];
+        }
+
+        if (currentType === "artist") {
+          data = await lastFmRequest("artist.search", "artist", query);
+          items = data.results?.artistmatches?.artist || [];
+        }
+
+        results.innerHTML = "";
+
+        if (!items.length) {
+          results.innerHTML = `<p class="loading">Nada encontrado.</p>`;
+          return;
+        }
+
+        for (const item of items.slice(0, 12)) {
+          let image = item.image?.[3]?.["#text"] || PLACEHOLDER_IMAGE;
+          let link = "#";
+
+          if (currentType === "artist") {
+            image = await getArtistImageFromWikipedia(item.name);
+            link = `artista.html?artist=${encodeURIComponent(item.name)}`;
+          }
+
+          if (currentType === "album") {
+            if (!item.artist) {
+              continue;
+            }
+
+            link =
+              `album.html?artist=${encodeURIComponent(item.artist)}&album=${encodeURIComponent(item.name)}`;
+          }
+
+          if (currentType === "track") {
+            if (!item.artist) {
+              continue;
+            }
+
+            link =
+              `track.html?artist=${encodeURIComponent(item.artist)}&track=${encodeURIComponent(item.name)}`;
+          }
+
+          const subtitle = item.artist || `${item.listeners || 0} ouvintes`;
+
+          results.innerHTML += `
+            <a href="${link}" class="card-link">
+              <div class="card">
+                <img
+                  src="${escapeHtml(image)}"
+                  alt="${escapeHtml(item.name)}"
+                  onerror="this.onerror=null; this.src='${PLACEHOLDER_IMAGE}'"
+                >
+                <div class="card-content">
+                  <h3>${escapeHtml(item.name)}</h3>
+                  <p>${escapeHtml(subtitle)}</p>
+                </div>
+              </div>
+            </a>
+          `;
+        }
+
+        if (!results.children.length) {
+          results.innerHTML = `<p class="loading">Nada encontrado.</p>`;
+        }
+      } catch (error) {
+        console.error("Erro na pesquisa:", error);
+        results.innerHTML = `
+          <p class="error-message">
+            Erro ao buscar no Last.fm: ${escapeHtml(error.message)}
+          </p>
+        `;
+      }
+    };
+
+    loadFeaturedAlbum();
+    loadTopRated();
+  </script>
+</body>
+</html>
+
